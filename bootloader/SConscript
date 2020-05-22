@@ -1,0 +1,10 @@
+Import('env', 'duplicate', 'app_name')
+
+mylib_env = env.Clone()
+mylib_env.Append(CPPDEFINES={'APP_NAME': '"' + app_name + '"'})
+mylib_a, mylib_h = env.SConscript('../library/mylib/SConscript', exports={'env': mylib_env}, variant_dir='mylib', duplicate=duplicate)
+
+sources = env.Glob('src/*.c')
+program = env.Program('bootloader', sources, CPPPATH=[mylib_h], LIBS=[mylib_a])
+
+Return('program')

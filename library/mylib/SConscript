@@ -1,0 +1,10 @@
+
+Import('env')
+
+env = env.Clone()
+
+headers = env.Dir('include/').srcnode()
+sources = env.Glob('src/*.c')
+library = env.StaticLibrary('mylib', sources, CPPPATH=['include/', 'src/include/'])
+
+Return('library', 'headers')
